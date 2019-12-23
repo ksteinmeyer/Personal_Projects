@@ -1,15 +1,51 @@
-.content{
+.content {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-
 }
 
-.matchingBox{
+.matchingBox {
   flex-grow: 1;
   flex-basis: 21%;
   margin: 20px;
   width: 200px;
   height: 100px;
   background-color: black;
+}
+
+.header {
+  display: block;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttons {
+  display: inline-flex;
+  justify-content: center;
+  text-align: center;
+  background-color: gray;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 3px;
+  color: black;
+  margin: 20px;
+  padding: 15px;
+}
+
+.buttons:hover {
+  display: inline-flex;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 3px;
+  color: black;
+  margin: 20px;
+  padding: 15px;
+  transition: all 300ms;
 }
