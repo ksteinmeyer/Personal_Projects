@@ -1,22 +1,42 @@
+document.getElementById('button12').addEventListener('click', createBoard);
+document.getElementById('button24').addEventListener('click', createBoard);
+document.getElementById('button36').addEventListener('click', createBoard);
+var numItems;
+
+function createBoard(event){
+  numItems = event.target.id.replace("button", '');
+  console.log(numItems);
+  for (var i = 0; i < numItems; i++) { //assigning a color value to each block
+    console.log(i);
+    var index = Math.trunc(Math.random() * (numItems/2));
+    while (colorMap.get(colorChoices[index]) > 2) { //does not allow a color value to be assigned to more than 2 blocks
+      index = Math.trunc(Math.random() * (numItems/2));
+    }
+    colorMap.set(colorChoices[index], colorMap.get(colorChoices[index]) + 1);
+    var box = document.createElement('article');
+    var button = document.createElement('button');
+    box.classList.add('matchingBox');
+    box.setAttribute("id", "box" + i);
+    console.log(box.id);
+    box.setAttribute('style', 'background-color: black;');
+    console.log(box.style.backgroundColor);
+    box.setAttribute('data-myColor', colorChoices[index]);
+    box.setAttribute('data-matched', 'false');
+    document.getElementById('content').appendChild(box);
+    box.addEventListener('click', changeColor);
+  }
+}
+
 var clicked = 0;
-var colorChoices = ['pink', 'red', 'blue', 'green', 'yellow', 'orange'];
+var colorChoices = ['pink', 'red', 'blue', 'green', 'yellow', 'orange',
+'magenta', 'maroon', 'DarkBlue', 'aqua', 'brown', 'grey', 'gold', 
+'cyan', 'coral', 'light pink', 'navy', 'purple'];
 var colorMap = new Map();
 for (var i = 0; i < colorChoices.length; i++) { //initalizing the values of the map to 0, because none of the colors have been used yet
   colorMap.set(colorChoices[i], '0');
   console.log(colorMap.get(colorChoices[i]));
 }
 
-
-for (var i = 0; i < 12; i++) { //assigning a color value to each block
-  var index = Math.trunc(Math.random() * 6);
-  while (colorMap.get(colorChoices[index]) > 2) { //does not allow a color value to be assigned to more than 2 blocks
-    index = Math.trunc(Math.random() * 6);
-  }
-  colorMap.set(colorChoices[index], colorMap.get(colorChoices[index]) + 1);
-  document.getElementById('box' + i).setAttribute('style', 'background-color: black');
-  document.getElementById('box' + i).setAttribute('data-myColor', colorChoices[index]);
-  document.getElementById('box' + i).addEventListener('click', changeColor);
-}
 
 function changeColor(event) { //changes block to its internal color value if clicked on
   console.log(event.target.id);
@@ -31,7 +51,7 @@ function changeColor(event) { //changes block to its internal color value if cli
 function isMatch() { //checks to see if two blocks are a match
   clicked = 0;
   var comparing = []
-  for (var i = 0; i < 12; i++) {
+  for (var i = 0; i < numItems; i++) {
     if (document.getElementById('box' + i).style.backgroundColor !== 'black' && document.getElementById('box' + i).getAttribute('data-matched') == 'false') {
       console.log("color is: " + document.getElementById('box' + i).style.backgroundColor);
       var first = 0;
