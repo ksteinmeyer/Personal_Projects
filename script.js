@@ -111,7 +111,6 @@ function isMatch() {
       var win = document.createElement('article');
       var text = document.createTextNode('You Win!');
       win.appendChild(text);
-
     }
   }
 
