@@ -1,15 +1,32 @@
-document.getElementById('button12').addEventListener('click', createBoard);
-document.getElementById('button24').addEventListener('click', createBoard);
-document.getElementById('button36').addEventListener('click', createBoard);
+document.getElementById('button12').addEventListener('click', reload);
+document.getElementById('button24').addEventListener('click', reload);
+document.getElementById('button36').addEventListener('click', reload);
 var numItems;
 var score = 0;
 
+function reload(event){
+  // document.location.reload();
+  createBoard(event);
+}
+
 function createBoard(event) {
+  var colorMap = new Map();
+  for (var i = 0; i < colorChoices.length; i++) { //initalizing the values of the map to 0, because none of the colors have been used yet
+    colorMap.set(colorChoices[i], '0');
+  }
+  const parent = document.getElementById("content");
+  while (parent.firstChild) {
+    console.log("removing");
+    parent.removeChild(parent.firstChild);
+  }
   numItems = event.target.id.replace("button", '');
   console.log(numItems);
+  console.log(numItems/2);
   for (var i = 0; i < numItems; i++) { //assigning a color value to each block
     var index = Math.trunc(Math.random() * (numItems / 2));
+    console.log(i);
     while (colorMap.get(colorChoices[index]) > 2) { //does not allow a color value to be assigned to more than 2 blocks
+      console.log('stuck');
       index = Math.trunc(Math.random() * (numItems / 2));
     }
     colorMap.set(colorChoices[index], colorMap.get(colorChoices[index]) + 1);
@@ -32,10 +49,7 @@ var colorChoices = ['pink', 'red', 'blue', 'green', 'yellow', 'orange',
   'magenta', 'maroon', 'DarkBlue', 'aqua', 'brown', 'grey', 'gold',
   'cyan', 'coral', 'light pink', 'navy', 'purple'
 ];
-var colorMap = new Map();
-for (var i = 0; i < colorChoices.length; i++) { //initalizing the values of the map to 0, because none of the colors have been used yet
-  colorMap.set(colorChoices[i], '0');
-}
+
 
 
 function changeColor(event) { //changes block to its internal color value if clicked on
