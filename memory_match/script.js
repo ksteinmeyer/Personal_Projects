@@ -9,9 +9,10 @@ var score = 0;
 var moves = 0;
 var clicked = 0;
 var colorMap = new Map();
-var colorChoices = ['pink', 'red', 'blue', 'green', 'yellow', 'orange',
-  'magenta', 'maroon', 'DarkBlue', 'GreenYellow', 'brown', 'grey', 'gold',
-  'cyan', 'coral', 'Indigo', 'navy', 'purple'
+var colorChoices =
+['firebrick', 'lightcoral', 'orange', 'mediumslateblue','yellow', 'lightskyblue',
+'greenyellow', 'seagreen', 'darkblue', 'mediumspringgreen', 'aqua', 'dodgerblue', 
+ 'violet', 'darkorchid', 'pink', 'rosybrown', 'silver', 'moccasin'
 ];
 
 //creating a board lets you start a game

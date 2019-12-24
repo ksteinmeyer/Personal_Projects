@@ -10,12 +10,11 @@ body {
   margin: 15px;
 }
 
-#numMove{
+#numMove {
   margin-left: 20px;
 }
 
 .content {
-  padding-top: 12%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -52,8 +51,6 @@ body {
 }
 
 .header {
-  display: block;
-  position: fixed;
   width: 100%;
   text-align: center;
   margin: auto;
