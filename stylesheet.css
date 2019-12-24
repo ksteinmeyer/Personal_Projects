@@ -1,13 +1,19 @@
-body{
+body {
   margin: 0px;
 }
 
-.score{
+.stats {
   display: inline;
 }
-.scoreContainer{
+
+.statsContainer {
   margin: 15px;
 }
+
+#numMove{
+  margin-left: 20px;
+}
+
 .content {
   padding-top: 12%;
   display: flex;
@@ -15,9 +21,29 @@ body{
   flex-wrap: wrap;
 }
 
-.matchingBox {
+.matchingBox12 {
+  flex-grow: 1;
+  flex-basis: 25%;
+  margin: 20px;
+  width: 50px;
+  height: 100px;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.matchingBox24 {
   flex-grow: 1;
   flex-basis: 12%;
+  margin: 20px;
+  width: 50px;
+  height: 100px;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.matchingBox36 {
+  flex-grow: 1;
+  flex-basis: 8%;
   margin: 20px;
   width: 50px;
   height: 100px;

@@ -1,39 +1,46 @@
-document.getElementById('button12').addEventListener('click', reload);
-document.getElementById('button24').addEventListener('click', reload);
-document.getElementById('button36').addEventListener('click', reload);
+//event listeners for deciding size of board
+document.getElementById('button12').addEventListener('click', createBoard);
+document.getElementById('button24').addEventListener('click', createBoard);
+document.getElementById('button36').addEventListener('click', createBoard);
+
+//tracking variables being declared + color array
 var numItems;
 var score = 0;
+var moves = 0;
+var clicked = 0;
+var colorMap = new Map();
+var colorChoices = ['pink', 'red', 'blue', 'green', 'yellow', 'orange',
+  'magenta', 'maroon', 'DarkBlue', 'GreenYellow', 'brown', 'grey', 'gold',
+  'cyan', 'coral', 'Indigo', 'navy', 'purple'
+];
 
-function reload(event){
-  // document.location.reload();
-  createBoard(event);
-}
-
+//creating a board lets you start a game
 function createBoard(event) {
-  var colorMap = new Map();
-  for (var i = 0; i < colorChoices.length; i++) { //initalizing the values of the map to 0, because none of the colors have been used yet
-    colorMap.set(colorChoices[i], '0');
-  }
-  const parent = document.getElementById("content");
-  while (parent.firstChild) {
-    console.log("removing");
-    parent.removeChild(parent.firstChild);
-  }
+  initColors(); //fresh color map
+  removeOldElements(); //fresh board
+
   numItems = event.target.id.replace("button", '');
-  console.log(numItems);
-  console.log(numItems/2);
-  for (var i = 0; i < numItems; i++) { //assigning a color value to each block
+  //assigning a color value to each block
+  for (var i = 0; i < numItems; i++) {
     var index = Math.trunc(Math.random() * (numItems / 2));
-    console.log(i);
-    while (colorMap.get(colorChoices[index]) > 2) { //does not allow a color value to be assigned to more than 2 blocks
-      console.log('stuck');
+    //does not allow a color value to be assigned to more than 2 blocks
+    while (colorMap.get(colorChoices[index]) > 2) {
       index = Math.trunc(Math.random() * (numItems / 2));
     }
     colorMap.set(colorChoices[index], colorMap.get(colorChoices[index]) + 1);
+
+    //start tracking score and moves
     document.getElementById("score").innerHTML = score;
-    // document.getElementById('score').appendChild(score);
+    document.getElementById("moves").innerHTML = moves;
+    //creating new element (box for matching)
     var box = document.createElement('article');
-    box.classList.add('matchingBox');
+    if (numItems < 24) {
+      box.classList.add('matchingBox12');
+    } else if (numItems < 36) {
+      box.classList.add('matchingBox24');
+    } else {
+      box.classList.add('matchingBox36');
+    }
     box.setAttribute("id", "box" + i);
     box.setAttribute('style', 'background-color: black;');
     box.setAttribute('data-myColor', colorChoices[index]);
@@ -44,23 +51,38 @@ function createBoard(event) {
   }
 }
 
-var clicked = 0;
-var colorChoices = ['pink', 'red', 'blue', 'green', 'yellow', 'orange',
-  'magenta', 'maroon', 'DarkBlue', 'aqua', 'brown', 'grey', 'gold',
-  'cyan', 'coral', 'light pink', 'navy', 'purple'
-];
+//initalizing the values of the map to 0, allows a new board to be created
+function initColors() {
+  for (var i = 0; i < colorChoices.length; i++) {
+    colorMap.set(colorChoices[i], '0');
+  }
+}
 
+//removes any remaining elements from previous boards
+function removeOldElements() {
+  score = 0;
+  moves = 0;
+  const parent = document.getElementById("content");
+  while (parent.firstChild) {
+    console.log("removing");
+    parent.removeChild(parent.firstChild);
+  }
+}
 
-
-function changeColor(event) { //changes block to its internal color value if clicked on
+//changes block to its internal color value if clicked on
+function changeColor(event) {
   document.getElementById(event.target.id).style.backgroundColor = document.getElementById(event.target.id).getAttribute('data-myColor');
   clicked += 1;
   if (clicked == 2) {
+    moves += 1;
+    document.getElementById("moves").innerHTML = moves;
     setTimeout(isMatch, 500);
   }
 }
 
-function isMatch() { //checks to see if two blocks are a match
+
+//checks to see if two blocks are a match
+function isMatch() {
   clicked = 0;
   var comparing = []
   for (var i = 0; i < numItems; i++) {
@@ -73,17 +95,23 @@ function isMatch() { //checks to see if two blocks are a match
       comparing[first] = document.getElementById('box' + i).id;
     }
   }
+  //if boxes are not a match change them back to black
   if (document.getElementById(comparing[0]).getAttribute('data-myColor') != document.getElementById(comparing[1]).getAttribute('data-myColor')) {
     document.getElementById(comparing[0]).setAttribute('style', 'background-color: black');
     document.getElementById(comparing[1]).setAttribute('style', 'background-color: black');
   } else {
+    //if they are a match, leave them as colored
+    //set their matched attribute to true, and increase the score
     score += 1;
     console.log(score);
     document.getElementById("score").innerHTML = score;
     document.getElementById(comparing[0]).setAttribute('data-matched', 'true');
     document.getElementById(comparing[1]).setAttribute('data-matched', 'true');
     if (score === numItems / 2) {
-      alert('you win!');
+      var win = document.createElement('article');
+      var text = document.createTextNode('You Win!');
+      win.appendChild(text);
+
     }
   }
 
